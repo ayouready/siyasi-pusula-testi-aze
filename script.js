@@ -1,28 +1,48 @@
-// Tam 40 sual verilənləri
+// 40 Tam Sual (20 İqtisadi + 20 Sosial)
 const questions = [
-    // İqtisadi suallar (Sol-Sağ)
-    { question: "Dövlət əsas xidmətləri (səhiyyə, təhsil) pulsuz təmin etməlidir", axis: "economic", direction: "left" },
-    { question: "Bazar iqtisadiyyatı ən səmərəli sistemdir", axis: "economic", direction: "right" },
-    { question: "Zənginlər daha çox vergi verməlidir", axis: "economic", direction: "left" },
-    { question: "Dövlət müəssisələri özəlləşdirilməlidir", axis: "economic", direction: "right" },
-    { question: "İşçilər şirkətlərdə səs hüququna malik olmalıdır", axis: "economic", direction: "left" },
-    { question: "Gömrük vergiləri minimuma endirilməlidir", axis: "economic", direction: "right" },
-    { question: "Əsas infrastruktur layihələri dövlət tərəfindən həyata keçirilməlidir", axis: "economic", direction: "left" },
-    { question: "Həmkarlar ittifaqları gücləndirilməlidir", axis: "economic", direction: "left" },
-    { question: "Dövlət sənayeyə müdaxilə etməməlidir", axis: "economic", direction: "right" },
-    { question: "Təqaüd sistemi dövlət tərəfindən təmin edilməlidir", axis: "economic", direction: "left" },
+    // İqtisadi (Sol=1-20)
+    {question: "Dövlət əsas xidmətləri pulsuz təmin etməlidir", axis: "economic", direction: "left"},
+    {question: "Bazar iqtisadiyyatı ən səmərəli sistemdir", axis: "economic", direction: "right"},
+    {question: "Zənginlər daha çox vergi verməlidir", axis: "economic", direction: "left"},
+    {question: "Dövlət müəssisələri özəlləşdirilməlidir", axis: "economic", direction: "right"},
+    {question: "İşçilər şirkətlərdə səs hüququna malik olmalıdır", axis: "economic", direction: "left"},
+    {question: "Gömrük vergiləri minimuma endirilməlidir", axis: "economic", direction: "right"},
+    {question: "Əsas infrastruktur dövlət tərəfindən həyata keçirilməlidir", axis: "economic", direction: "left"},
+    {question: "Həmkarlar ittifaqları gücləndirilməlidir", axis: "economic", direction: "left"},
+    {question: "Dövlət sənayeyə müdaxilə etməməlidir", axis: "economic", direction: "right"},
+    {question: "Təqaüd sistemi dövlət tərəfindən təmin edilməlidir", axis: "economic", direction: "left"},
+    {question: "İstehsal vasitələri fərdlərə məxsus olmalıdır", axis: "economic", direction: "right"},
+    {question: "Torpaq özəlləşdirilməlidir", axis: "economic", direction: "right"},
+    {question: "Banklar dövlət nəzarətində olmalıdır", axis: "economic", direction: "left"},
+    {question: "İşsizlik müavinətləri artırılmalıdır", axis: "economic", direction: "left"},
+    {question: "Dövlət tərəfindən təbliğat aparılmalıdır", axis: "economic", direction: "left"},
+    {question: "İstehsalat dövlət tərəfindən planlaşdırılmalıdır", axis: "economic", direction: "left"},
+    {question: "İşçilər öz iş yerlərini idarə etməlidir", axis: "economic", direction: "left"},
+    {question: "Dövlət sənətkarlığı dəstəkləməlidir", axis: "economic", direction: "left"},
+    {question: "Tibb işçiləri daha çox maaş almalıdır", axis: "economic", direction: "left"},
+    {question: "İctimai nəqliyyat pulsuz olmalıdır", axis: "economic", direction: "left"},
     
-    // Sosial suallar (Avtoritar-Libertar)
-    { question: "Hökumət şəxsi hüquqları ictimai təhlükəsizlik üçün məhdudlaşdıra bilər", axis: "social", direction: "authoritarian" },
-    { question: "Cins azlıqları eyni hüquqlara malik olmalıdır", axis: "social", direction: "libertarian" },
-    { question: "Əsgərlik məcburi olmalıdır", axis: "social", direction: "authoritarian" },
-    { question: "Dövlət mətbuatı nəzarət etməlidir", axis: "social", direction: "authoritarian" },
-    { question: "Narkotik maddələrin istifadəsi azad olmalıdır", axis: "social", direction: "libertarian" },
-    { question: "Din dövlət işlərindən ayrı olmalıdır", axis: "social", direction: "libertarian" },
-    { question: "Cinayətkarlara daha sərt cəzalar verilməlidir", axis: "social", direction: "authoritarian" },
-    { question: "Silah sahibliyi məhdudlaşdırılmalıdır", axis: "social", direction: "authoritarian" },
-    { question: "Hər kəs öz bədəni haqqında özü qərar verməlidir", axis: "social", direction: "libertarian" },
-    { question: "Milli mədəniyyət qorunmalıdır", axis: "social", direction: "authoritarian" }
+    // Sosial (21-40)
+    {question: "Hökumət şəxsi hüquqları məhdudlaşdıra bilər", axis: "social", direction: "authoritarian"},
+    {question: "Cins azlıqları eyni hüquqlara malik olmalıdır", axis: "social", direction: "libertarian"},
+    {question: "Əsgərlik məcburi olmalıdır", axis: "social", direction: "authoritarian"},
+    {question: "Dövlət mətbuatı nəzarət etməlidir", axis: "social", direction: "authoritarian"},
+    {question: "Narkotik maddələrin istifadəsi azad olmalıdır", axis: "social", direction: "libertarian"},
+    {question: "Din dövlət işlərindən ayrı olmalıdır", axis: "social", direction: "libertarian"},
+    {question: "Cinayətkarlara daha sərt cəzalar verilməlidir", axis: "social", direction: "authoritarian"},
+    {question: "Silah sahibliyi məhdudlaşdırılmalıdır", axis: "social", direction: "authoritarian"},
+    {question: "Hər kəs öz bədəni haqqında özü qərar verməlidir", axis: "social", direction: "libertarian"},
+    {question: "Milli mədəniyyət qorunmalıdır", axis: "social", direction: "authoritarian"},
+    {question: "Həbsxanalar islah üçün deyil, cəza üçün olmalıdır", axis: "social", direction: "authoritarian"},
+    {question: "İmmiqrantlar üçün daha sərt qaydalar tətbiq edilməlidir", axis: "social", direction: "authoritarian"},
+    {question: "Həyat hüququ hər şeydən üstün olmalıdır", axis: "social", direction: "libertarian"},
+    {question: "Dövlət sənətkarlığı dəstəkləməlidir", axis: "social", direction: "authoritarian"},
+    {question: "Uşaq baxçası dövlət tərəfindən təmin edilməlidir", axis: "social", direction: "authoritarian"},
+    {question: "Dövlət təhsil proqramlarını tənzimləməlidir", axis: "social", direction: "authoritarian"},
+    {question: "Hər kəs öz ailə qurumunu seçməkdə azad olmalıdır", axis: "social", direction: "libertarian"},
+    {question: "Milli təhlükəsizlik üçün şəxsi məlumatlar toplanmalıdır", axis: "social", direction: "authoritarian"},
+    {question: "Dövlət vətəndaşların şəxsi həyatına qarışmamalıdır", axis: "social", direction: "libertarian"},
+    {question: "Dövlət dinə müdaxilə etməməlidir", axis: "social", direction: "libertarian"}
 ];
 
 // Proqram vəziyyəti
@@ -121,42 +141,42 @@ function nextQuestion() {
     }
 }
 
-// Nəticələri göstər
+// Nəticələri göstər (DÜZƏLDİLMİŞ)
 function showResults() {
     elements.quizContainer.classList.add('hidden');
     elements.resultContainer.classList.remove('hidden');
     
     // Xalları hesabla (-100 ilə 100 arası)
-    const economic = Math.round((state.economicScore / (questions.length * 3)) * 100);
-    const social = Math.round((state.socialScore / (questions.length * 3)) * 100);
+    const economic = Math.round((state.economicScore / 60) * 100); // 20 sual * max 3 xal
+    const social = Math.round((state.socialScore / 60) * 100);
     
-    // Markerın yerini təyin et
-    updateMarkerPosition(economic/2, social/2);
+    // Markerın yerini təyin et (ƏSAS DÜZƏLDİLMƏ)
+    updateMarkerPosition(
+        (economic / 100) * 40, // X oxu: sol=negativ, sağ=pozitiv
+        (social / 100) * 40    // Y oxu: aşağı=negativ, yuxarı=pozitiv
+    );
     
     // Nəticə mətni
     let position = '';
-    if (economic > 0 && social > 0) position = 'solçu və avtoritar';
-    else if (economic > 0 && social < 0) position = 'solçu və libertar';
-    else if (economic < 0 && social > 0) position = 'sağçı və avtoritar';
+    if (economic < 0 && social > 0) position = 'solçu və avtoritar';
+    else if (economic < 0 && social < 0) position = 'solçu və libertar';
+    else if (economic > 0 && social > 0) position = 'sağçı və avtoritar';
     else position = 'sağçı və libertar';
     
     elements.resultText.innerHTML = `
         <h3>Sizin Siyasi Mövqeyiniz</h3>
-        <p><strong>İqtisadi:</strong> ${economic > 0 ? 'Sol' : 'Sağ'} (${economic}%)</p>
-        <p><strong>Sosial:</strong> ${social > 0 ? 'Avtoritar' : 'Libertar'} (${social}%)</p>
+        <p><strong>İqtisadi:</strong> ${economic < 0 ? 'Sol' : 'Sağ'} (${Math.abs(economic)}%)</p>
+        <p><strong>Sosial:</strong> ${social > 0 ? 'Avtoritar' : 'Libertar'} (${Math.abs(social)}%)</p>
         <p><strong>Ümumi:</strong> ${position}</p>
     `;
 }
 
-// İlerləmə çubuğunu yenilə
-function updateProgress() {
-    const progress = ((state.currentQuestion + 1) / questions.length) * 100;
-    elements.progressBar.style.width = `${progress}%`;
-}
-
-// Markerın yerini yenilə
+// Markerın yerini yenilə (DÜZƏLDİLMİŞ)
 function updateMarkerPosition(x, y) {
     const marker = document.getElementById('marker');
+    // Mərkəz nöqtəsi 50%,50% 
+    // X oxu: sol= -, sağ= +
+    // Y oxu: aşağı= -, yuxarı= +
     marker.style.left = `${50 + x}%`;
     marker.style.top = `${50 - y}%`;
 }
@@ -173,6 +193,12 @@ function initCompass() {
         label.textContent = labels[i];
         compass.appendChild(label);
     });
+}
+
+// İlerləmə çubuğunu yenilə
+function updateProgress() {
+    const progress = ((state.currentQuestion + 1) / questions.length) * 100;
+    elements.progressBar.style.width = `${progress}%`;
 }
 
 // Yenidən başlat düyməsi
