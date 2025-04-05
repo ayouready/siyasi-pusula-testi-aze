@@ -63,7 +63,8 @@ const elements = {
     economicValue: document.getElementById('economic-value'),
     socialValue: document.getElementById('social-value'),
     resultDescription: document.getElementById('result-description'),
-    restartBtn: document.getElementById('restart-btn')
+    restartBtn: document.getElementById('restart-btn'),
+    privacyLink: document.getElementById('privacy-link')
 };
 
 // Testi başlat
@@ -231,6 +232,12 @@ elements.restartBtn.addEventListener('click', () => {
     elements.resultContainer.classList.add('hidden');
     elements.quizContainer.classList.remove('hidden');
     initQuiz();
+});
+
+// Məxfilik siyasəti
+elements.privacyLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Bu testdə verilən cavablar heç yerdə qeyd edilmir və paylaşılmır. Bütün cavablar yalnız sizin cihazınızda işlənir.');
 });
 
 // Proqramı başlat
