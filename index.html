@@ -3,40 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sən siyasi spektrumun harasındasan?</title>
+    <title>Siyasi Pusula Testi</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Pusula temel stilleri */
-        #compass {
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
-            position: relative;
-            background: radial-gradient(circle at center, white 65%, transparent 66%),
-                        conic-gradient(from 0deg at center, #ff9999 0deg, #99ff99 90deg, #9999ff 180deg, #ffff99 270deg, #ff9999 360deg);
-            border-radius: 50%;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        #marker {
-            width: 20px;
-            height: 20px;
-            background: #e63946;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.5s ease;
-            z-index: 10;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Sən siyasi spektrumun harasındasan?</h1>
-            <p>(Türkiyə sağ-solunu ağlından at!)</p>
+            <p>(40 suallıq tam test)</p>
         </header>
         
         <div class="progress-container">
@@ -57,59 +31,6 @@
         </div>
     </div>
 
-    <div class="music-control" id="music-control">
-        <i class="fas fa-volume-up" id="music-icon"></i>
-    </div>
-
     <script src="script.js"></script>
-    <script>
-        // Pusula fonksiyonları
-        function initCompass() {
-            const compass = document.getElementById('compass');
-            const labels = ['SOL', 'SAĞ', 'AVTORİTAR', 'LİBERTAR'];
-            const positions = ['left', 'right', 'top', 'bottom'];
-            
-            positions.forEach((pos, i) => {
-                const label = document.createElement('div');
-                label.className = `compass-label ${pos}`;
-                label.textContent = labels[i];
-                label.style.position = 'absolute';
-                label.style.fontWeight = 'bold';
-                label.style.background = 'rgba(255,255,255,0.7)';
-                label.style.padding = '2px 8px';
-                label.style.borderRadius = '10px';
-                label.style.fontSize = '14px';
-                
-                if(pos === 'left') {
-                    label.style.top = '50%';
-                    label.style.left = '10px';
-                    label.style.transform = 'translateY(-50%)';
-                }
-                else if(pos === 'right') {
-                    label.style.top = '50%';
-                    label.style.right = '10px';
-                    label.style.transform = 'translateY(-50%)';
-                }
-                else if(pos === 'top') {
-                    label.style.top = '10px';
-                    label.style.left = '50%';
-                    label.style.transform = 'translateX(-50%)';
-                }
-                else {
-                    label.style.bottom = '10px';
-                    label.style.left = '50%';
-                    label.style.transform = 'translateX(-50%)';
-                }
-                
-                compass.appendChild(label);
-            });
-        }
-
-        function updateMarkerPosition(x, y) {
-            const marker = document.getElementById('marker');
-            marker.style.left = `${50 + x}%`;
-            marker.style.top = `${50 - y}%`;
-        }
-    </script>
 </body>
 </html>
