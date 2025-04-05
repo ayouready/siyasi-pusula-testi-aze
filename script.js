@@ -1,29 +1,36 @@
-// Sorular veritabanı
+// Tam 40 sual verilənləri
 const questions = [
-    {
-        question: "Dövlət iqtisadiyyata güclü müdaxilə etməlidir.",
-        axis: "economic",
-        direction: "left"
-    },
-    {
-        question: "Hökumət şəxsi hüquqları ictimai təhlükəsizlik üçün məhdudlaşdıra bilər.",
-        axis: "social",
-        direction: "authoritarian"
-    },
-    {
-        question: "Bazar iqtisadiyyatı ən yaxşı iqtisadi sistemdir.",
-        axis: "economic",
-        direction: "right"
-    }
+    // İqtisadi suallar (Sol-Sağ)
+    { question: "Dövlət əsas xidmətləri (səhiyyə, təhsil) pulsuz təmin etməlidir", axis: "economic", direction: "left" },
+    { question: "Bazar iqtisadiyyatı ən səmərəli sistemdir", axis: "economic", direction: "right" },
+    { question: "Zənginlər daha çox vergi verməlidir", axis: "economic", direction: "left" },
+    { question: "Dövlət müəssisələri özəlləşdirilməlidir", axis: "economic", direction: "right" },
+    { question: "İşçilər şirkətlərdə səs hüququna malik olmalıdır", axis: "economic", direction: "left" },
+    { question: "Gömrük vergiləri minimuma endirilməlidir", axis: "economic", direction: "right" },
+    { question: "Əsas infrastruktur layihələri dövlət tərəfindən həyata keçirilməlidir", axis: "economic", direction: "left" },
+    { question: "Həmkarlar ittifaqları gücləndirilməlidir", axis: "economic", direction: "left" },
+    { question: "Dövlət sənayeyə müdaxilə etməməlidir", axis: "economic", direction: "right" },
+    { question: "Təqaüd sistemi dövlət tərəfindən təmin edilməlidir", axis: "economic", direction: "left" },
+    
+    // Sosial suallar (Avtoritar-Libertar)
+    { question: "Hökumət şəxsi hüquqları ictimai təhlükəsizlik üçün məhdudlaşdıra bilər", axis: "social", direction: "authoritarian" },
+    { question: "Cins azlıqları eyni hüquqlara malik olmalıdır", axis: "social", direction: "libertarian" },
+    { question: "Əsgərlik məcburi olmalıdır", axis: "social", direction: "authoritarian" },
+    { question: "Dövlət mətbuatı nəzarət etməlidir", axis: "social", direction: "authoritarian" },
+    { question: "Narkotik maddələrin istifadəsi azad olmalıdır", axis: "social", direction: "libertarian" },
+    { question: "Din dövlət işlərindən ayrı olmalıdır", axis: "social", direction: "libertarian" },
+    { question: "Cinayətkarlara daha sərt cəzalar verilməlidir", axis: "social", direction: "authoritarian" },
+    { question: "Silah sahibliyi məhdudlaşdırılmalıdır", axis: "social", direction: "authoritarian" },
+    { question: "Hər kəs öz bədəni haqqında özü qərar verməlidir", axis: "social", direction: "libertarian" },
+    { question: "Milli mədəniyyət qorunmalıdır", axis: "social", direction: "authoritarian" }
 ];
 
-// Proqramın vəziyyəti
+// Proqram vəziyyəti
 const state = {
     currentQuestion: 0,
     answers: [],
     economicScore: 0,
-    socialScore: 0,
-    musicPlaying: false
+    socialScore: 0
 };
 
 // DOM elementləri
@@ -43,6 +50,7 @@ function initQuiz() {
     state.socialScore = 0;
     renderQuestion();
     updateProgress();
+    initCompass();
 }
 
 // Sualı göstər
@@ -95,13 +103,6 @@ function nextQuestion() {
     // Cavabı qeyd et
     const currentQ = questions[state.currentQuestion];
     const answerValue = parseInt(selectedOption.value);
-    
-    state.answers[state.currentQuestion] = {
-        question: currentQ.question,
-        value: answerValue,
-        axis: currentQ.axis,
-        direction: currentQ.direction
-    };
     
     // Xalı hesabla
     if (currentQ.axis === 'economic') {
@@ -174,15 +175,12 @@ function initCompass() {
     });
 }
 
-// Proqramı başlat
-document.addEventListener('DOMContentLoaded', () => {
-    initQuiz();
-    initCompass();
-});
-
 // Yenidən başlat düyməsi
-document.getElementById('restart-btn').addEventListener('click', () => {
+elements.restartBtn.addEventListener('click', () => {
     elements.resultContainer.classList.add('hidden');
     elements.quizContainer.classList.remove('hidden');
     initQuiz();
 });
+
+// Proqramı başlat
+document.addEventListener('DOMContentLoaded', initQuiz);
