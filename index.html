@@ -3,158 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sən siyasi spektrumun harasındasan? (Türkiyə sağ-solunu ağlından at!)</title>
+    <title>Sən siyasi spektrumun harasındasan?</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #4a6fa5;
-            --secondary: #ff6b6b;
-            --background: #f8f9fa;
-            --card-bg: #ffffff;
-            --text: #333333;
-            --border: #e0e0e0;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-        
-        .question-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .option:hover {
-            background-color: #f0f0f0;
-        }
-        
-        .option input {
-            margin-right: 10px;
-        }
-        
-        .progress-container {
-            width: 100%;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background-color: var(--primary);
-            border-radius: 5px;
-            width: 0%;
-            transition: width 0.3s;
-        }
-        
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #3a5a8f;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        #result-container {
-            text-align: center;
-            padding: 30px;
-        }
-        
+        /* Pusula temel stilleri */
         #compass {
             width: 300px;
             height: 300px;
             margin: 20px auto;
             position: relative;
-            background-image: url('compass-bg.png');
-            background-size: contain;
-            background-repeat: no-repeat;
+            background: radial-gradient(circle at center, white 65%, transparent 66%),
+                        conic-gradient(from 0deg at center, #ff9999 0deg, #99ff99 90deg, #9999ff 180deg, #ffff99 270deg, #ff9999 360deg);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
         #marker {
             width: 20px;
             height: 20px;
-            background-color: var(--secondary);
+            background: #e63946;
             border-radius: 50%;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-        }
-        
-        .result-text {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        
-        @media (max-width: 600px) {
-            .options {
-                flex-direction: column;
-            }
-            
-            #compass {
-                width: 250px;
-                height: 250px;
-            }
+            transition: all 0.5s ease;
+            z-index: 10;
         }
     </style>
 </head>
@@ -169,9 +43,7 @@
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         
-        <div id="quiz-container">
-            <!-- Sorular buraya dinamik olarak eklenecek -->
-        </div>
+        <div id="quiz-container"></div>
         
         <div id="result-container" class="hidden">
             <h2>Sizin Siyasi Mövqeyiniz</h2>
@@ -184,368 +56,60 @@
             <button id="restart-btn">Yenidən Başla</button>
         </div>
     </div>
-    
-    <audio id="bg-music" loop>
-        <source src="kuzu-kuzu.mp3" type="audio/mpeg">
-    </audio>
-    
+
+    <div class="music-control" id="music-control">
+        <i class="fas fa-volume-up" id="music-icon"></i>
+    </div>
+
+    <script src="script.js"></script>
     <script>
-        // Sorular ve cevaplar
-        const questions = [
-            {
-                question: "Dövlət iqtisadiyyata güclü müdaxilə etməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Hökumət şəxsi hüquqları ictimai təhlükəsizlik üçün məhdudlaşdıra bilər.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "Böyük şirkətlər daha çox vergi verməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Əsgərlik məcburi olmalıdır.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "Səhiyyə xidmətləri pulsuz və universal olmalıdır.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Dövlət mətbuatı nəzarət etməlidir.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "Bazar iqtisadiyyatı ən yaxşı iqtisadi sistemdir.",
-                axis: "economic",
-                direction: "right"
-            },
-            {
-                question: "Cins azlıqları eyni hüquqlara malik olmalıdır.",
-                axis: "social",
-                direction: "libertarian"
-            },
-            {
-                question: "Təhsil tamamilə dövlət tərəfindən təmin edilməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Dövlət dinə müdaxilə etməməlidir.",
-                axis: "social",
-                direction: "libertarian"
-            },
-            {
-                question: "Həmkarlar ittifaqları gücləndirilməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Cinayətkarlara daha sərt cəzalar verilməlidir.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "Gömrük vergiləri azaldılmalıdır.",
-                axis: "economic",
-                direction: "right"
-            },
-            {
-                question: "Dövlət vətəndaşların şəxsi həyatına qarışmamalıdır.",
-                axis: "social",
-                direction: "libertarian"
-            },
-            {
-                question: "Dövlət müəssisələri özəlləşdirilməlidir.",
-                axis: "economic",
-                direction: "right"
-            },
-            {
-                question: "Milli təhlükəsizlik üçün şəxsi məlumatlar toplanmalıdır.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "İctimai nəqliyyat pulsuz olmalıdır.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Uşaq baxçası dövlət tərəfindən təmin edilməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Silah sahibliyi məhdudlaşdırılmalıdır.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "İşçilər şirkətlərdə səs hüququna malik olmalıdır.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Narkotik maddələrin istifadəsi azad olmalıdır.",
-                axis: "social",
-                direction: "libertarian"
-            },
-            {
-                question: "Banklar dövlət nəzarətində olmalıdır.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "İmmiqrantlar üçün daha sərt qaydalar tətbiq edilməlidir.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "Torpaq özəlləşdirilməlidir.",
-                axis: "economic",
-                direction: "right"
-            },
-            {
-                question: "Həbsxanalar islah üçün deyil, cəza üçün olmalıdır.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "Tibb işçiləri daha çox maaş almalıdır.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Dövlət sənətkarlığı dəstəkləməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Həyat hüququ hər şeydən üstün olmalıdır.",
-                axis: "social",
-                direction: "libertarian"
-            },
-            {
-                question: "İstehsalat dövlət tərəfindən planlaşdırılmalıdır.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Dövlət tərəfindən təbliğat aparılmalıdır.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "İşsizlik müavinətləri artırılmalıdır.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Dövlət təqaüd sistemini ləğv etməlidir.",
-                axis: "economic",
-                direction: "right"
-            },
-            {
-                question: "Hər kəs öz bədəni haqqında özü qərar verməlidir.",
-                axis: "social",
-                direction: "libertarian"
-            },
-            {
-                question: "Dövlət elmi tədqiqatları maliyyələşdirməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Milli mədəniyyət qorunmalıdır.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "İstehsal vasitələri fərdlərə məxsus olmalıdır.",
-                axis: "economic",
-                direction: "right"
-            },
-            {
-                question: "Dövlət təhsil proqramlarını tənzimləməlidir.",
-                axis: "social",
-                direction: "authoritarian"
-            },
-            {
-                question: "İşçilər öz iş yerlərini idarə etməlidir.",
-                axis: "economic",
-                direction: "left"
-            },
-            {
-                question: "Hər kəs öz ailə qurumunu seçməkdə azad olmalıdır.",
-                axis: "social",
-                direction: "libertarian"
-            },
-            {
-                question: "Dövlət sənayeni maliyyələşdirməlidir.",
-                axis: "economic",
-                direction: "left"
-            }
-        ];
-
-        // Oy verme fonksiyonu
-        function createQuestionElement(question, index) {
-            const questionElement = document.createElement('div');
-            questionElement.className = 'question-card';
+        // Pusula fonksiyonları
+        function initCompass() {
+            const compass = document.getElementById('compass');
+            const labels = ['SOL', 'SAĞ', 'AVTORİTAR', 'LİBERTAR'];
+            const positions = ['left', 'right', 'top', 'bottom'];
             
-            const questionText = document.createElement('div');
-            questionText.className = 'question-text';
-            questionText.textContent = `${index + 1}. ${question.question}`;
-            questionElement.appendChild(questionText);
-            
-            const options = document.createElement('div');
-            options.className = 'options';
-            
-            const optionValues = [
-                { text: 'Tam razıyam', value: 3 },
-                { text: 'Razıyam', value: 2 },
-                { text: 'Qismən razıyam', value: 1 },
-                { text: 'Bitərəfəm', value: 0 },
-                { text: 'Qismən narazıyam', value: -1 },
-                { text: 'Narazıyam', value: -2 },
-                { text: 'Tam narazıyam', value: -3 }
-            ];
-            
-            optionValues.forEach((option, i) => {
-                const optionElement = document.createElement('label');
-                optionElement.className = 'option';
+            positions.forEach((pos, i) => {
+                const label = document.createElement('div');
+                label.className = `compass-label ${pos}`;
+                label.textContent = labels[i];
+                label.style.position = 'absolute';
+                label.style.fontWeight = 'bold';
+                label.style.background = 'rgba(255,255,255,0.7)';
+                label.style.padding = '2px 8px';
+                label.style.borderRadius = '10px';
+                label.style.fontSize = '14px';
                 
-                const input = document.createElement('input');
-                input.type = 'radio';
-                input.name = `question-${index}`;
-                input.value = option.value;
-                input.dataset.axis = question.axis;
-                input.dataset.direction = question.direction;
-                
-                optionElement.appendChild(input);
-                optionElement.appendChild(document.createTextNode(option.text));
-                options.appendChild(optionElement);
-            });
-            
-            questionElement.appendChild(options);
-            return questionElement;
-        }
-
-        // Testi baslat
-        function startQuiz() {
-            const quizContainer = document.getElementById('quiz-container');
-            quizContainer.innerHTML = '';
-            
-            questions.forEach((question, index) => {
-                quizContainer.appendChild(createQuestionElement(question, index));
-            });
-            
-            const submitButton = document.createElement('button');
-            submitButton.textContent = 'Nəticəni Göstər';
-            submitButton.id = 'submit-btn';
-            submitButton.addEventListener('click', calculateResult);
-            quizContainer.appendChild(submitButton);
-            
-            // Arka plan muzigi
-            const bgMusic = document.getElementById('bg-music');
-            bgMusic.volume = 0.3;
-            bgMusic.play();
-        }
-
-        // Sonuc hesapla
-        function calculateResult() {
-            let economicScore = 0;
-            let socialScore = 0;
-            let answeredQuestions = 0;
-            
-            document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
-                const value = parseInt(input.value);
-                const axis = input.dataset.axis;
-                const direction = input.dataset.direction;
-                
-                if (axis === 'economic') {
-                    if (direction === 'left') {
-                        economicScore += value;
-                    } else {
-                        economicScore -= value;
-                    }
-                } else if (axis === 'social') {
-                    if (direction === 'authoritarian') {
-                        socialScore += value;
-                    } else {
-                        socialScore -= value;
-                    }
+                if(pos === 'left') {
+                    label.style.top = '50%';
+                    label.style.left = '10px';
+                    label.style.transform = 'translateY(-50%)';
+                }
+                else if(pos === 'right') {
+                    label.style.top = '50%';
+                    label.style.right = '10px';
+                    label.style.transform = 'translateY(-50%)';
+                }
+                else if(pos === 'top') {
+                    label.style.top = '10px';
+                    label.style.left = '50%';
+                    label.style.transform = 'translateX(-50%)';
+                }
+                else {
+                    label.style.bottom = '10px';
+                    label.style.left = '50%';
+                    label.style.transform = 'translateX(-50%)';
                 }
                 
-                answeredQuestions++;
+                compass.appendChild(label);
             });
-            
-            if (answeredQuestions < questions.length * 0.7) {
-                alert('Zəhmət olmasa bütün suallara cavab verin!');
-                return;
-            }
-            
-            // Normalize scores (-100 to 100)
-            economicScore = Math.round((economicScore / (answeredQuestions * 3)) * 100);
-            socialScore = Math.round((socialScore / (answeredQuestions * 3)) * 100);
-            
-            showResult(economicScore, socialScore);
         }
 
-        // Sonucu goster
-        function showResult(economic, social) {
-            document.getElementById('quiz-container').classList.add('hidden');
-            
-            const resultContainer = document.getElementById('result-container');
-            resultContainer.classList.remove('hidden');
-            
+        function updateMarkerPosition(x, y) {
             const marker = document.getElementById('marker');
-            // Compass is 300x300, center is 150,150
-            // X: economic (-100 to 100) -> (30 to 270)
-            // Y: social (-100 to 100) -> (30 to 270)
-            const x = 150 + (economic * 1.2);
-            const y = 150 - (social * 1.2);
-            
-            // Limit to compass boundaries
-            const boundedX = Math.max(30, Math.min(270, x));
-            const boundedY = Math.max(30, Math.min(270, y));
-            
-            marker.style.left = `${boundedX}px`;
-            marker.style.top = `${boundedY}px`;
-            
-            // Determine quadrant
-            let position = '';
-            if (economic > 0 && social > 0) {
-                position = 'solçu və avtoritar';
-            } else if (economic > 0 && social < 0) {
-                position = 'solçu və libertar';
-            } else if (economic < 0 && social > 0) {
-                position = 'sağçı və avtoritar';
-            } else {
-                position = 'sağçı və libertar';
-            }
-            
-            document.getElementById('result-text').textContent = 
-                `Sizin siyasi mövqeyiniz: 
-                İqtisadi oxda ${economic > 0 ? 'solçu' : 'sağçı'} (${economic}%), 
-                Sosial oxda ${social > 0 ? 'avtoritar' : 'libertar'} (${social}%). 
-                Ümumilikdə siz ${position} meyilliyiniz var.`;
+            marker.style.left = `${50 + x}%`;
+            marker.style.top = `${50 - y}%`;
         }
-
-        // Yeniden baslat
-        document.getElementById('restart-btn').addEventListener('click', () => {
-            document.getElementById('result-container').classList.add('hidden');
-            startQuiz();
-        });
-
-        // Sayfa yuklendiginde testi baslat
-        window.addEventListener('DOMContentLoaded', startQuiz);
     </script>
 </body>
 </html>
