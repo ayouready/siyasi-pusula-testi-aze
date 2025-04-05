@@ -1,123 +1,231 @@
+// Sorular veritabanı
 const questions = [
-    { text: "Dövlət zənginlərə daha çox vergi qoyaraq sosial proqramları maliyyələşdirməlidir.", axis: "economic", weight: -2 },
-    { text: "Bazar iqtisadiyyatı hər sahədə daha effektiv nəticə verir.", axis: "economic", weight: 2 },
-    { text: "Cəmiyyət ailə institutu ətrafında qurulmalıdır.", axis: "social", weight: 2 },
-    { text: "Azad söz ifadəsi məhdudlaşdırılmamalıdır, hətta narahatedici olsa belə.", axis: "social", weight: -2 },
-    { text: "Dövlət əhalinin təhsilinə daha çox yatırım etməlidir.", axis: "economic", weight: -1 },
-    { text: "Əmək bazarında daha az müdaxilə olmalıdır.", axis: "economic", weight: 1 },
-    { text: "Sosial dövlət və sosial təhlükəsizlik sistemləri gücləndirilməlidir.", axis: "social", weight: -1 },
-    { text: "Şəxsi mülkiyyət hüquqları daha ciddi qorunmalıdır.", axis: "economic", weight: 2 },
-    { text: "Qadınların siyasi həyatda daha çox yer alması təşviq edilməlidir.", axis: "social", weight: 1 },
-    { text: "LGBT hüquqları daha çox müdafiə edilməlidir.", axis: "social", weight: -1 },
-    { text: "Hökumət özəl sektora daha çox sərmayə qoymalı və özəl təşəbbüsləri dəstəkləməlidir.", axis: "economic", weight: -2 },
-    { text: "Bütün dövlət xidmətləri pulsuz olmalıdır.", axis: "economic", weight: 1 },
-    { text: "İnsanlar özlərini istədikləri şəkildə ifadə etməlidirlər, heç kimə məhdudiyyət qoyulmamalıdır.", axis: "social", weight: 2 },
-    { text: "İctimai təhsil daha çox qiymətləndirilməli və təhsil sisteminə ciddi islahatlar aparılmalıdır.", axis: "economic", weight: -1 },
-    { text: "Hökumət ən yüksək təhsil səviyyəsini təmin etməlidir, ancaq bunu yalnız peşəkar ixtisaslara əsaslanaraq etməlidir.", axis: "economic", weight: 1 },
-    { text: "Dövlət işçi haqlarını müəyyən etməməli, bazar özü tənzimlənməlidir.", axis: "economic", weight: 2 },
-    { text: "Yerli icmalar öz idarəetmələrində daha çox müstəqil olmalıdır.", axis: "social", weight: 2 },
-    { text: "Din dövlət işlərinə qarışmamalıdır.", axis: "social", weight: 2 },
-    { text: "Gəlir vergisi bütün vətəndaşlar üçün bərabər olmalıdır.", axis: "economic", weight: -2 },
-    { text: "İnsanlar öz şəxsi həyatlarını dövlətin müdaxiləsi olmadan qurmalıdır.", axis: "social", weight: 1 },
-    { text: "Özəl sektor işçiləri üçün hüquqlar təmin edilməlidir.", axis: "economic", weight: -1 },
-    { text: "Bütün şəxsi mülkiyyətlər dövlətə verilərək yenidən paylanmalıdır.", axis: "economic", weight: -2 },
-    { text: "Hökumət insanlara azad seçimlər verməlidir, lakin sosial ədalətə də diqqət yetirməlidir.", axis: "social", weight: 1 },
-    { text: "Əhalinin böyük bir hissəsi dövlət yardımlarına ehtiyac duymamalıdır.", axis: "economic", weight: 1 },
-    { text: "Cəmiyyətdə hər kəsin fərqli hüquqları olmalıdır, bu isə bərabərlikdən daha vacibdir.", axis: "social", weight: -1 },
-    { text: "Dövlət mülkiyyətin əl dəyişməsinə müdaxilə etməməlidir.", axis: "economic", weight: 2 },
-    { text: "Dövlət iqtisadiyyatın bütün sahələrinə nəzarət etməlidir.", axis: "economic", weight: -2 },
-    { text: "Cəmiyyətdə hər bir fərd öz fikirlərini sərbəst şəkildə ifadə etməlidir, amma ictimai əxlaqı qorumaq şərtilə.", axis: "social", weight: 1 },
-    { text: "Ailə başçısının hüquqları yalnız ata ilə məhdudlaşmamalıdır.", axis: "social", weight: 2 },
-    { text: "Dövlət qanunlarını pozan şəxslər daha sərt cəzalarla cəzalandırılmalıdır.", axis: "social", weight: -1 },
-    { text: "İnsanların öz seçdiyi liderlərə sadiq qalması və hər şeydə onlar üçün uyğun qərarlar alması vacibdir.", axis: "social", weight: -2 },
-    { text: "İnsanların öz işlərini özünə aid olması və dövlətin onlara müdaxilə etməməsi vacibdir.", axis: "economic", weight: 2 },
-    { text: "Hökumət bir çox sahədə monopoliyaya sahib olmalıdır.", axis: "economic", weight: -2 },
-    { text: "Bütün dünyada sərhədlər aradan qaldırılmalıdır.", axis: "social", weight: 2 },
-    { text: "İctimai səhiyyə dövlət tərəfindən təmin edilməli, amma insanların öz şəxsi sağlamlığına məsuliyyət daşıması vacibdir.", axis: "economic", weight: -1 },
-    { text: "Əmək bazarında dövlətin nəzarəti daha çox olmalıdır.", axis: "economic", weight: 1 },
-    { text: "Dövlət təhlükəsizliyi üçün daha çox sərmayə qoyulmalıdır.", axis: "social", weight: -1 },
-    { text: "Təhsildə fərdi yanaşma tətbiq edilməlidir və hər kəsin öz qabiliyyətinə görə təhsil alması təmin edilməlidir.", axis: "economic", weight: 1 }
-];
-let currentQuestion = 0;
-let economicScore = 0;
-let socialScore = 0;
-
-const questionContainer = document.getElementById('question-container');
-const optionsContainer = document.getElementById('options-container');
-const nextBtn = document.getElementById('next-btn');
-const resultDiv = document.getElementById('result');
-const ecoRes = document.getElementById('economic-result');
-const socRes = document.getElementById('social-result');
-const compass = document.getElementById('compass');
-const ctx = compass.getContext("2d");
-
-const options = [
-    { text: "Tam razıyam", value: 2 },
-    { text: "Razıyam", value: 1 },
-    { text: "Bitərəfəm", value: 0 },
-    { text: "Razı deyiləm", value: -1 },
-    { text: "Tam razı deyiləm", value: -2 }
+  // Siyasi
+  {
+    question: "Dövlət iqtisadiyyata güclü müdaxilə etməlidir.",
+    axis: "economic",
+    direction: "left"
+  },
+  {
+    question: "Hökumət şəxsi hüquqları ictimai təhlükəsizlik üçün məhdudlaşdıra bilər.",
+    axis: "social",
+    direction: "authoritarian"
+  },
+  // İqtisadi
+  {
+    question: "Böyük şirkətlər daha çox vergi verməlidir.",
+    axis: "economic",
+    direction: "left"
+  },
+  {
+    question: "Bazar iqtisadiyyatı ən yaxşı iqtisadi sistemdir.",
+    axis: "economic",
+    direction: "right"
+  },
+  // Sosial
+  {
+    question: "Cins azlıqları eyni hüquqlara malik olmalıdır.",
+    axis: "social",
+    direction: "libertarian"
+  },
+  {
+    question: "Əsgərlik məcburi olmalıdır.",
+    axis: "social",
+    direction: "authoritarian"
+  },
+  // Daha fazla soru eklenebilir
 ];
 
-// Sualları göstərmək funksiyası
-function showQuestion() {
-    const q = questions[currentQuestion];
-    questionContainer.innerText = q.text;
-    optionsContainer.innerHTML = "";
-    options.forEach(opt => {
-        const btn = document.createElement("button");
-        btn.innerText = opt.text;
-        btn.onclick = () => selectAnswer(opt.value);
-        optionsContainer.appendChild(btn);
-    });
-    nextBtn.style.display = "none";  // Növbəti düymə gizlədilir
-}
-
-// Cavab seçimi funksiyası
-function selectAnswer(value) {
-    const q = questions[currentQuestion];
-    if (q.axis === "economic") economicScore += q.weight * value;
-    else if (q.axis === "social") socialScore += q.weight * value;
-
-    nextBtn.style.display = "block";  // Növbəti düymə göstərilir
-}
-
-// Növbəti düyməsi ilə keçid
-nextBtn.onclick = () => {
-    currentQuestion++;
-    if (currentQuestion < questions.length) {
-        showQuestion();
-        nextBtn.style.display = "none";  // Yenidən növbəti düyməni gizlət
-    } else {
-        showResults();
-    }
+// Uygulama durumu
+const state = {
+  currentQuestion: 0,
+  answers: [],
+  economicScore: 0,
+  socialScore: 0,
+  musicPlaying: false
 };
 
-// Nəticələri göstərmək
+// DOM elementleri
+const elements = {
+  quizContainer: document.getElementById('quiz-container'),
+  progressBar: document.getElementById('progress-bar'),
+  questionText: document.getElementById('question-text'),
+  optionsContainer: document.getElementById('options-container'),
+  nextBtn: document.getElementById('next-btn'),
+  resultContainer: document.getElementById('result-container'),
+  compass: document.getElementById('compass'),
+  marker: document.getElementById('marker'),
+  resultText: document.getElementById('result-text'),
+  restartBtn: document.getElementById('restart-btn'),
+  musicControl: document.getElementById('music-control'),
+  musicIcon: document.getElementById('music-icon'),
+  bgMusic: document.getElementById('bg-music')
+};
+
+// Testi başlat
+function initQuiz() {
+  state.currentQuestion = 0;
+  state.answers = [];
+  state.economicScore = 0;
+  state.socialScore = 0;
+  
+  renderQuestion();
+  updateProgress();
+  
+  // Müzik kontrolü
+  elements.bgMusic.volume = 0.3;
+  elements.musicControl.addEventListener('click', toggleMusic);
+}
+
+// Soruyu render et
+function renderQuestion() {
+  const question = questions[state.currentQuestion];
+  
+  elements.questionText.textContent = `${state.currentQuestion + 1}. ${question.question}`;
+  
+  // Seçenekleri oluştur
+  elements.optionsContainer.innerHTML = '';
+  const options = [
+    { text: 'Tam razıyam', value: 3 },
+    { text: 'Razıyam', value: 2 },
+    { text: 'Qismən razıyam', value: 1 },
+    { text: 'Bitərəfəm', value: 0 },
+    { text: 'Qismən narazıyam', value: -1 },
+    { text: 'Narazıyam', value: -2 },
+    { text: 'Tam narazıyam', value: -3 }
+  ];
+  
+  options.forEach((option, index) => {
+    const optionElement = document.createElement('div');
+    optionElement.className = 'option';
+    optionElement.innerHTML = `
+      <input type="radio" name="answer" id="option-${index}" value="${option.value}">
+      <label for="option-${index}">${option.text}</label>
+    `;
+    
+    // Önceden cevaplanmışsa işaretle
+    if (state.answers[state.currentQuestion] !== undefined) {
+      if (state.answers[state.currentQuestion].value === option.value) {
+        optionElement.querySelector('input').checked = true;
+      }
+    }
+    
+    elements.optionsContainer.appendChild(optionElement);
+  });
+}
+
+// İlerleme çubuğunu güncelle
+function updateProgress() {
+  const progress = ((state.currentQuestion + 1) / questions.length) * 100;
+  elements.progressBar.style.width = `${progress}%`;
+}
+
+// Sonraki soruya geç
+function nextQuestion() {
+  const selectedOption = document.querySelector('input[name="answer"]:checked');
+  
+  if (!selectedOption) {
+    alert('Zəhmət olmasa bir cavab seçin!');
+    return;
+  }
+  
+  // Cevabı kaydet
+  const currentQ = questions[state.currentQuestion];
+  const answerValue = parseInt(selectedOption.value);
+  
+  state.answers[state.currentQuestion] = {
+    question: currentQ.question,
+    value: answerValue,
+    axis: currentQ.axis,
+    direction: currentQ.direction
+  };
+  
+  // Skoru güncelle
+  if (currentQ.axis === 'economic') {
+    state.economicScore += (currentQ.direction === 'left') ? answerValue : -answerValue;
+  } else {
+    state.socialScore += (currentQ.direction === 'authoritarian') ? answerValue : -answerValue;
+  }
+  
+  // Sonraki soruya geç veya bitir
+  if (state.currentQuestion < questions.length - 1) {
+    state.currentQuestion++;
+    renderQuestion();
+    updateProgress();
+  } else {
+    showResults();
+  }
+}
+
+// Sonuçları göster
 function showResults() {
-    questionContainer.style.display = "none";
-    optionsContainer.style.display = "none";
-    nextBtn.style.display = "none";
-    resultDiv.style.display = "block";
-
-    ecoRes.innerText = "İqtisadi Ox: " + economicScore;
-    socRes.innerText = "Mədəni Ox: " + socialScore;
-    drawCompass();
+  elements.quizContainer.classList.add('hidden');
+  elements.resultContainer.classList.remove('hidden');
+  
+  // Normalize scores (-100 to 100)
+  const economic = Math.round((state.economicScore / (questions.length * 3)) * 100);
+  const social = Math.round((state.socialScore / (questions.length * 3)) * 100);
+  
+  // Pusulada konum belirle
+  const x = 50 + (economic * 0.4); // %50 merkez
+  const y = 50 - (social * 0.4);   // %50 merkez
+  
+  elements.marker.style.left = `${x}%`;
+  elements.marker.style.top = `${y}%`;
+  
+  // Sonuç metni
+  let position = '';
+  if (economic > 0 && social > 0) {
+    position = 'solçu və avtoritar';
+  } else if (economic > 0 && social < 0) {
+    position = 'solçu və libertar';
+  } else if (economic < 0 && social > 0) {
+    position = 'sağçı və avtoritar';
+  } else {
+    position = 'sağçı və libertar';
+  }
+  
+  elements.resultText.innerHTML = `
+    <h3>Sizin Siyasi Mövqeyiniz</h3>
+    <p><strong>İqtisadi Ox:</strong> ${economic > 0 ? 'Solçu' : 'Sağçı'} (${economic}%)</p>
+    <p><strong>Sosial Ox:</strong> ${social > 0 ? 'Avtoritar' : 'Libertar'} (${social}%)</p>
+    <p><strong>Ümumi:</strong> ${position}</p>
+  `;
 }
 
-// Kompası çək
-function drawCompass() {
-    ctx.clearRect(0, 0, 300, 300);
-    ctx.beginPath();
-    ctx.moveTo(150, 0); ctx.lineTo(150, 300);
-    ctx.moveTo(0, 150); ctx.lineTo(300, 150);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(150 + economicScore * 5, 150 - socialScore * 5, 5, 0, 2 * Math.PI);
-    ctx.fillStyle = "red";
-    ctx.fill();
+// Müzik kontrolü
+function toggleMusic() {
+  if (state.musicPlaying) {
+    elements.bgMusic.pause();
+    elements.musicIcon.className = 'fas fa-volume-mute';
+  } else {
+    elements.bgMusic.play();
+    elements.musicIcon.className = 'fas fa-volume-up';
+  }
+  state.musicPlaying = !state.musicPlaying;
 }
 
-// İlk sualı göstər
-showQuestion();
+// Event listeners
+elements.nextBtn.addEventListener('click', nextQuestion);
+elements.restartBtn.addEventListener('click', () => {
+  elements.resultContainer.classList.add('hidden');
+  elements.quizContainer.classList.remove('hidden');
+  initQuiz();
+});
+
+// Uygulamayı başlat
+document.addEventListener('DOMContentLoaded', () => {
+  // FontAwesome ikonları yükle
+  const fa = document.createElement('link');
+  fa.rel = 'stylesheet';
+  fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+  document.head.appendChild(fa);
+  
+  // Google Fonts yükle
+  const gf = document.createElement('link');
+  gf.rel = 'stylesheet';
+  gf.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap';
+  document.head.appendChild(gf);
+  
+  initQuiz();
+});
