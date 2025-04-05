@@ -4,22 +4,20 @@
     --accent: #457b9d;
     --light: #f1faee;
     --dark: #1d3557;
-    --gray: #6c757d;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--light);
     color: var(--dark);
-    margin: 0;
-    padding: 0;
     line-height: 1.6;
+    margin: 0;
+    padding: 20px;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
 }
 
 header {
@@ -29,12 +27,6 @@ header {
     background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
     color: white;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    margin: 0;
-    font-size: 28px;
 }
 
 .progress-container {
@@ -57,13 +49,14 @@ h1 {
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .options {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin: 20px 0;
 }
 
 .option {
@@ -77,6 +70,10 @@ h1 {
 
 .option:hover {
     background-color: #f0f0f0;
+}
+
+.option input {
+    margin-right: 10px;
 }
 
 button {
@@ -98,31 +95,70 @@ button:hover {
     display: none;
 }
 
-.result-text {
-    margin-top: 20px;
-    font-size: 18px;
+#compass {
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    position: relative;
+    background: 
+        radial-gradient(circle at center, white 65%, transparent 66%),
+        conic-gradient(
+            from 0deg at center,
+            #ff9999 0deg, #99ff99 90deg,
+            #9999ff 180deg, #ffff99 270deg,
+            #ff9999 360deg
+        );
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.music-control {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: white;
-    width: 50px;
-    height: 50px;
+#marker {
+    width: 20px;
+    height: 20px;
+    background: var(--secondary);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    cursor: pointer;
-    z-index: 100;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+    z-index: 10;
+}
+
+.compass-label {
+    position: absolute;
+    font-weight: bold;
+    background: rgba(255,255,255,0.7);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.compass-label.top {
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.compass-label.right {
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.compass-label.bottom {
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.compass-label.left {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
 }
 
 @media (max-width: 600px) {
-    .options {
-        flex-direction: column;
-    }
     #compass {
         width: 250px;
         height: 250px;
