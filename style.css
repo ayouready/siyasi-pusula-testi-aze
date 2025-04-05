@@ -14,17 +14,11 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
 }
 
 header {
@@ -127,7 +121,6 @@ button:hover {
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    margin-bottom: 2rem;
 }
 
 #compass {
@@ -230,10 +223,18 @@ button:hover {
     font-size: 1.1rem;
 }
 
-.detail-value.left { color: var(--primary); }
-.detail-value.right { color: var(--secondary); }
-.detail-value.auth { color: var(--primary-dark); }
-.detail-value.lib { color: var(--secondary-light); }
+.detail-value.right {
+    color: var(--secondary);
+}
+.detail-value.left {
+    color: var(--primary);
+}
+.detail-value.auth {
+    color: var(--primary-dark);
+}
+.detail-value.lib {
+    color: var(--secondary-light);
+}
 
 #result-description {
     background-color: rgba(241,250,238,0.7);
@@ -243,16 +244,9 @@ button:hover {
     border-left: 3px solid var(--primary);
 }
 
-.result-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-
 footer {
     text-align: center;
-    margin-top: auto;
+    margin-top: 3rem;
     padding: 1.5rem 0;
     color: var(--dark);
     font-size: 0.9rem;
@@ -295,13 +289,5 @@ footer a:hover {
     .result-details {
         flex-direction: column;
         align-items: center;
-    }
-    
-    header {
-        padding: 1.5rem;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
     }
 }
