@@ -1,164 +1,279 @@
 :root {
-    --primary: #3a5a78;
-    --secondary: #e63946;
-    --accent: #457b9d;
-    --light: #f1faee;
-    --dark: #1d3557;
+    --primary: #e63946; /* Vibrant red */
+    --secondary: #f1faee; /* Clean white */
+    --accent: #a8dadc; /* Soft teal */
+    --dark: #1d3557; /* Navy blue */
+    --light: #ffffff; /* Pure white */
+    --gray: #6c757d;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
     background-color: var(--light);
     color: var(--dark);
-    line-height: 1.6;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    line-height: 1.6;
+    background-image: radial-gradient(circle at 10% 20%, rgba(230,57,70,0.05) 0%, rgba(255,255,255,1) 90%);
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
+    padding: 2rem;
 }
 
 header {
     text-align: center;
-    margin-bottom: 30px;
-    padding: 20px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primary) 0%, #c1121f 100%);
     color: white;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(230,57,70,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--light), var(--accent));
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .progress-container {
     width: 100%;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    margin: 20px 0;
+    background-color: rgba(230,57,70,0.1);
+    border-radius: 100px;
+    margin: 2rem 0;
+    height: 12px;
+    overflow: hidden;
 }
 
 .progress-bar {
-    height: 10px;
-    background: linear-gradient(90deg, var(--accent), var(--primary));
-    border-radius: 5px;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #c1121f);
+    border-radius: 100px;
     width: 0%;
-    transition: width 0.3s;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .question-card {
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--light);
+    border-radius: 12px;
+    padding: 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(29,53,87,0.05);
+    border-left: 4px solid var(--primary);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.question-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(29,53,87,0.1);
+}
+
+.question-text {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--dark);
+    line-height: 1.5;
 }
 
 .options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
 }
 
 .option {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 0.9rem 1.2rem;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    background-color: rgba(241,250,238,0.5);
+    border: 1px solid rgba(230,57,70,0.1);
 }
 
 .option:hover {
-    background-color: #f0f0f0;
+    background-color: rgba(230,57,70,0.05);
+    border-color: rgba(230,57,70,0.2);
 }
 
 .option input {
-    margin-right: 10px;
+    margin-right: 1rem;
+    accent-color: var(--primary);
+    transform: scale(1.2);
 }
 
 button {
-    background-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary) 0%, #c1121f 100%);
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(230,57,70,0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 button:hover {
-    background-color: #2c4762;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(230,57,70,0.3);
 }
 
-.hidden {
-    display: none;
+#result-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--light);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(29,53,87,0.1);
+    margin-top: 1rem;
 }
 
 #compass {
-    width: 300px;
-    height: 300px;
-    margin: 20px auto;
+    width: 320px;
+    height: 320px;
+    margin: 2rem auto;
     position: relative;
     background: 
-        radial-gradient(circle at center, white 65%, transparent 66%),
+        radial-gradient(circle at center, var(--light) 0%, var(--light) 65%, transparent 65.5%),
         conic-gradient(
             from 0deg at center,
-            #ff9999 0deg, #99ff99 90deg,
-            #9999ff 180deg, #ffff99 270deg,
-            #ff9999 360deg
+            rgba(230,57,70,0.2) 0deg,
+            rgba(168,218,220,0.2) 90deg,
+            rgba(29,53,87,0.2) 180deg,
+            rgba(241,250,238,0.2) 270deg,
+            rgba(230,57,70,0.2) 360deg
         );
     border-radius: 50%;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(29,53,87,0.1);
+    border: 1px solid rgba(230,57,70,0.1);
 }
 
 #marker {
-    width: 20px;
-    height: 20px;
-    background: var(--secondary);
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
     border-radius: 50%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: all 0.5s ease;
+    box-shadow: 0 0 0 4px rgba(230,57,70,0.3);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     z-index: 10;
+}
+
+#marker::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .compass-label {
     position: absolute;
-    font-weight: bold;
-    background: rgba(255,255,255,0.7);
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 14px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.9);
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    color: var(--dark);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .compass-label.top {
-    top: 10px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .compass-label.right {
     top: 50%;
-    right: 10px;
+    right: 15px;
     transform: translateY(-50%);
 }
 
 .compass-label.bottom {
-    bottom: 10px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .compass-label.left {
     top: 50%;
-    left: 10px;
+    left: 15px;
     transform: translateY(-50%);
 }
 
-@media (max-width: 600px) {
+.result-text {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.result-text h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+#restart-btn {
+    background: linear-gradient(135deg, var(--dark) 0%, #14213d 100%);
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    #compass {
+        width: 280px;
+        height: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .question-text {
+        font-size: 1.1rem;
+    }
+    
     #compass {
         width: 250px;
         height: 250px;
