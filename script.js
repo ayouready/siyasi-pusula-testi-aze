@@ -57,8 +57,12 @@ const state = {
 const elements = {
     quizContainer: document.getElementById('quiz-container'),
     progressBar: document.getElementById('progress-bar'),
+    progressText: document.getElementById('progress-text'),
     resultContainer: document.getElementById('result-container'),
-    resultText: document.getElementById('result-text'),
+    resultTitle: document.getElementById('result-title'),
+    economicValue: document.getElementById('economic-value'),
+    socialValue: document.getElementById('social-value'),
+    resultDescription: document.getElementById('result-description'),
     restartBtn: document.getElementById('restart-btn')
 };
 
@@ -70,7 +74,6 @@ function initQuiz() {
     state.socialScore = 0;
     renderQuestion();
     updateProgress();
-    initCompass();
 }
 
 // Sualı göstər
@@ -81,7 +84,9 @@ function renderQuestion() {
         <div class="question-card">
             <div class="question-text">${state.currentQuestion + 1}. ${question.question}</div>
             <div class="options" id="options-container"></div>
-            <button id="next-btn">${state.currentQuestion < questions.length - 1 ? 'Növbəti sual' : 'Nəticəni gör'}</button>
+            <button id="next-btn">
+                ${state.currentQuestion < questions.length - 1 ? 'Növbəti sual' : 'Nəticəni gör'}
+            </button>
         </div>
     `;
     
@@ -124,12 +129,12 @@ function nextQuestion() {
     const currentQ = questions[state.currentQuestion];
     const answerValue = parseInt(selectedOption.value);
     
-    // Xalı hesabla
-    if (currentQ.axis === 'economic') {
-        state.economicScore += (currentQ.direction === 'left') ? answerValue : -answerValue;
-    } else {
-        state.socialScore += (currentQ.direction === 'authoritarian') ? answerValue : -answerValue;
-    }
+    state.answers[state.currentQuestion] = {
+        question: currentQ.question,
+        value: answerValue,
+        axis: currentQ.axis,
+        direction: currentQ.direction
+    };
     
     // Növbəti suala keç və ya nəticəni göstər
     if (state.currentQuestion < questions.length - 1) {
@@ -137,71 +142,91 @@ function nextQuestion() {
         renderQuestion();
         updateProgress();
     } else {
+        calculateResults();
         showResults();
     }
 }
 
-// Nəticələri göstər (DÜZƏLDİLMİŞ)
+// Nəticələri hesabla
+function calculateResults() {
+    questions.forEach((q, index) => {
+        const answer = state.answers[index];
+        if (!answer) return;
+        
+        if (q.axis === 'economic') {
+            state.economicScore += (q.direction === 'left') ? answer.value : -answer.value;
+        } else {
+            state.socialScore += (q.direction === 'authoritarian') ? answer.value : -answer.value;
+        }
+    });
+}
+
+// Nəticələri göstər
 function showResults() {
+    // Normallaşdırma (-100 ilə 100 arası)
+    const economic = Math.round((state.economicScore / 60) * 100);
+    const social = Math.round((state.socialScore / 60) * 100);
+    
+    // Marker pozisiyası
+    updateMarkerPosition(
+        (economic / 100) * 45, // X: sol (-45%) ↔ sağ (+45%)
+        (social / 100) * 45    // Y: libertar (-45%) ↔ avtoritar (+45%)
+    );
+    
+    // Nəticə təhlili
+    let position = "";
+    let description = "";
+    
+    if (economic < -20 && social > 20) {
+        position = "Solçu-Avtoritar";
+        description = "Dövlət iqtisadiyyata güclü müdaxiləsini və ənənəvi dəyərləri dəstəkləyirsiniz. Əsas prioritetlər ictimai bərabərlik və qayda-qanunun qorunmasıdır.";
+    } 
+    else if (economic < -20 && social < -20) {
+        position = "Solçu-Libertar";
+        description = "İctimai bərabərliyi dəstəkləyir, lakin şəxsi azadlıqları üstün tutursunuz. Dövlət müdaxiləsinin minimal olmasını üstün tutursunuz.";
+    }
+    else if (economic > 20 && social > 20) {
+        position = "Sağçı-Avtoritar";
+        description = "Bazar iqtisadiyyatını və güclü dövlət nəzarətini dəstəkləyirsiniz. Ənənəvi dəyərlərin qorunması sizin üçün vacibdir.";
+    }
+    else if (economic > 20 && social < -20) {
+        position = "Sağçı-Libertar";
+        description = "Şəxsi azadlıqları və minimum dövlət müdaxiləsini dəstəkləyirsiniz. İqtisadi və şəxsi azadlıqlar əsas prioritetlərdir.";
+    }
+    else {
+        position = "Mərkəzçi";
+        description = "Siyasi baxışlarınız müxtəlif mövqelərdən elementlər ehtiva edir. Həm iqtisadi, həm də sosial məsələlərdə balanslı yanaşmanız var.";
+    }
+    
+    // Nəticələri göstər
     elements.quizContainer.classList.add('hidden');
     elements.resultContainer.classList.remove('hidden');
     
-    // Xalları hesabla (-100 ilə 100 arası)
-    const economic = Math.round((state.economicScore / 60) * 100); // 20 sual * max 3 xal
-    const social = Math.round((state.socialScore / 60) * 100);
+    elements.resultTitle.textContent = position;
+    elements.economicValue.textContent = `${economic < 0 ? 'Sol' : 'Sağ'} (${Math.abs(economic)}%)`;
+    elements.socialValue.textContent = `${social > 0 ? 'Avtoritar' : 'Libertar'} (${Math.abs(social)}%)`;
+    elements.resultDescription.textContent = description;
     
-    // Markerın yerini təyin et (ƏSAS DÜZƏLDİLMƏ)
-    updateMarkerPosition(
-        (economic / 100) * 40, // X oxu: sol=negativ, sağ=pozitiv
-        (social / 100) * 40    // Y oxu: aşağı=negativ, yuxarı=pozitiv
-    );
-    
-    // Nəticə mətni
-    let position = '';
-    if (economic < 0 && social > 0) position = 'solçu və avtoritar';
-    else if (economic < 0 && social < 0) position = 'solçu və libertar';
-    else if (economic > 0 && social > 0) position = 'sağçı və avtoritar';
-    else position = 'sağçı və libertar';
-    
-    elements.resultText.innerHTML = `
-        <h3>Sizin Siyasi Mövqeyiniz</h3>
-        <p><strong>İqtisadi:</strong> ${economic < 0 ? 'Sol' : 'Sağ'} (${Math.abs(economic)}%)</p>
-        <p><strong>Sosial:</strong> ${social > 0 ? 'Avtoritar' : 'Libertar'} (${Math.abs(social)}%)</p>
-        <p><strong>Ümumi:</strong> ${position}</p>
-    `;
+    // Rəng kodlaması
+    elements.economicValue.className = economic < 0 ? 'detail-value left' : 'detail-value right';
+    elements.socialValue.className = social > 0 ? 'detail-value auth' : 'detail-value lib';
 }
 
-// Markerın yerini yenilə (DÜZƏLDİLMİŞ)
+// Markerın yerini yenilə
 function updateMarkerPosition(x, y) {
     const marker = document.getElementById('marker');
-    // Mərkəz nöqtəsi 50%,50% 
-    // X oxu: sol= -, sağ= +
-    // Y oxu: aşağı= -, yuxarı= +
     marker.style.left = `${50 + x}%`;
     marker.style.top = `${50 - y}%`;
-}
-
-// Pusula etiketlərini yarat
-function initCompass() {
-    const compass = document.getElementById('compass');
-    const labels = ['SOL', 'SAĞ', 'AVTORİTAR', 'LİBERTAR'];
-    const positions = ['left', 'right', 'top', 'bottom'];
-    
-    positions.forEach((pos, i) => {
-        const label = document.createElement('div');
-        label.className = `compass-label ${pos}`;
-        label.textContent = labels[i];
-        compass.appendChild(label);
-    });
 }
 
 // İlerləmə çubuğunu yenilə
 function updateProgress() {
     const progress = ((state.currentQuestion + 1) / questions.length) * 100;
     elements.progressBar.style.width = `${progress}%`;
+    elements.progressText.textContent = `${state.currentQuestion + 1}/${questions.length}`;
 }
 
-// Yenidən başlat düyməsi
+// Yenidən başlat
 elements.restartBtn.addEventListener('click', () => {
     elements.resultContainer.classList.add('hidden');
     elements.quizContainer.classList.remove('hidden');
