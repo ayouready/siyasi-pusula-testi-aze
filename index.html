@@ -3,34 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Siyasi Pusula Testi</title>
+    <title>Sən siyasi spektrumun harasındasan? | 40 suallıq test</title>
+    <meta name="description" content="Siyasi baxışlarınızı ölçən pulsuz onlayn test">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%23e63946%22>🧭</text></svg>">
+    
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Siyasi Pusula Testi">
+    <meta property="og:description" content="Siyasi baxışlarınızı ölçən 40 suallıq test">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://example.com">
+    <meta name="theme-color" content="#e63946">
+    
+    <style>
+        /* Preloader to prevent FOUC */
+        body.loading {
+            overflow: hidden;
+            height: 100vh;
+        }
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f1faee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .preloader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(230, 57, 70, 0.2);
+            border-radius: 50%;
+            border-top-color: #e63946;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body>
+<body class="loading">
+    <div class="preloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
     <div class="container">
         <header>
-            <h1>Sən siyasi spektrumun harasındasan?</h1>
-            <p>(40 suallıq tam test)</p>
+            <div class="header-content">
+                <h1>Sən siyasi spektrumun harasındasan?</h1>
+                <p>40 suallıq tam test • Türkiyə sağ-solunu ağlından at!</p>
+            </div>
+            <div class="header-decoration">
+                <div class="decoration-circle"></div>
+                <div class="decoration-circle"></div>
+                <div class="decoration-circle"></div>
+            </div>
         </header>
         
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
+            <span id="progress-text">0/40</span>
         </div>
         
-        <div id="quiz-container"></div>
+        <main>
+            <div id="quiz-container"></div>
+            
+            <div id="result-container" class="hidden">
+                <div class="result-header">
+                    <h2>Sizin Siyasi Mövqeyiniz</h2>
+                    <div class="result-score" id="result-score"></div>
+                </div>
+                
+                <div id="compass">
+                    <div class="compass-axis"></div>
+                    <div class="compass-axis vertical"></div>
+                    <div id="marker">
+                        <div class="marker-pulse"></div>
+                    </div>
+                </div>
+                
+                <div class="result-text">
+                    <h3 id="result-title"></h3>
+                    <p id="result-description"></p>
+                    <div class="result-details">
+                        <div class="detail-card">
+                            <span class="detail-label">İqtisadi</span>
+                            <span class="detail-value" id="economic-value"></span>
+                        </div>
+                        <div class="detail-card">
+                            <span class="detail-label">Sosial</span>
+                            <span class="detail-value" id="social-value"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-actions">
+                    <button id="restart-btn" class="btn-secondary">
+                        <i class="fas fa-redo"></i> Yenidən başla
+                    </button>
+                    <button id="share-btn" class="btn-primary">
+                        <i class="fas fa-share-alt"></i> Paylaş
+                    </button>
+                </div>
+            </div>
+        </main>
         
-        <div id="result-container" class="hidden">
-            <h2>Sizin Siyasi Mövqeyiniz</h2>
-            <div id="compass">
-                <div id="marker"></div>
-            </div>
-            <div class="result-text">
-                <p id="result-text"></p>
-            </div>
-            <button id="restart-btn">Yenidən Başla</button>
-        </div>
+        <footer>
+            <p>© 2025 Siyasi Pusula Testi - by zectted| <a href="#" id="privacy-link">Məxfilik Siyasəti</a></p>
+        </footer>
     </div>
 
+    <!-- Audio Element (Hidden) -->
+    <audio id="bg-music" loop>
+        <source src="assets/kuzu-kuzu.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- JavaScript -->
     <script src="script.js"></script>
+    
+    <script>
+        // Remove preloader when page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.body.classList.remove('loading');
+                document.querySelector('.preloader').style.opacity = '0';
+                setTimeout(function() {
+                    document.querySelector('.preloader').style.display = 'none';
+                }, 500);
+            }, 800);
+        });
+    </script>
 </body>
 </html>
